@@ -92,12 +92,16 @@ func (s *Store) Has(key string) bool {
 	return true
 }
 
+func (s *Store) Clear() error {
+	return os.RemoveAll(s.Root)
+}
+
 func (s *Store) Delete(key string) error {
 	pathKey := s.PathTransformFunc(key)
 	firstPathNameWithRoot := fmt.Sprintf("%s/%s", s.Root, pathKey.FirstPathName())
 
 	defer func() {
-		log.Printf("Deleted file: [%s] from disk", s.Root+pathKey.FullPath())
+		log.Printf("Deleted file: [%s] from disk", s.Root+"/"+pathKey.FullPath())
 	}()
 
 	return os.RemoveAll(firstPathNameWithRoot)
