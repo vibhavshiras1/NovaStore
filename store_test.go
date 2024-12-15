@@ -38,11 +38,11 @@ func TestStore(t *testing.T) {
 	store := newStore()
 	defer teardown(t, store)
 
-	key := "golangisthefuture"
+	key := "lowlevellearning"
 	data := []byte("Some jpg file")
 
 	// Writing Data
-	err := store.streamWrite(key, bytes.NewReader(data))
+	err := store.Write(key, bytes.NewReader(data))
 	if err != nil {
 		t.Error(err)
 	}
@@ -75,7 +75,7 @@ func TestStoreMultipleKeys(t *testing.T) {
 
 	keyArr := make([]string, 0, 10)
 	for i := 0; i < 10; i++ {
-		keyArr = append(keyArr, fmt.Sprintf("testkey_%d", i))
+		keyArr = append(keyArr, fmt.Sprintf("newkey_%d", i))
 	}
 	data := []byte("Distributed file systems is amazing")
 
@@ -83,7 +83,7 @@ func TestStoreMultipleKeys(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		key := keyArr[i]
 
-		err := store.streamWrite(key, bytes.NewReader(data))
+		err := store.Write(key, bytes.NewReader(data))
 		if err != nil {
 			t.Error(err)
 		}
