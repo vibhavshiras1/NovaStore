@@ -8,10 +8,12 @@ type Peer interface {
 	Send([]byte) error
 	// RemoteAddr() net.Addr
 	// Close() error
+	CloseStream()
 }
 
 // Transport handles communication between peers (nodes)
 type Transport interface {
+	Addr() string
 	Dial(string) error
 	ListenAndAccept() error
 	Consume() <-chan RPC
